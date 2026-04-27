@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dev Premium | Portfolio</title>
+  <title>Jamisson Silva | Portfolio</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -31,7 +31,6 @@
       overflow-x: hidden;
     }
 
-    /* Fundo de Partículas */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -50,7 +49,6 @@
       position: relative;
     }
 
-    /* Símbolo Infinito Melhorado */
     .infinity-container {
       position: absolute;
       z-index: -1;
@@ -105,7 +103,6 @@
       background: linear-gradient(to right, var(--primary), transparent);
     }
 
-    /* Cards com Glassmorphism */
     .card {
       background: var(--card-bg);
       backdrop-filter: blur(16px);
@@ -136,6 +133,7 @@
       color: #000;
       font-weight: 600;
       border-radius: 8px;
+      text-decoration: none;
       transition: 0.3s;
     }
 
@@ -150,7 +148,6 @@
       border-top: 1px solid rgba(255,255,255,0.05);
     }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-dark); }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
@@ -174,8 +171,7 @@
     <h2><i data-lucide="user"></i> Sobre Mim</h2>
     <div class="card">
       <p style="line-height: 1.8; font-size: 1.1rem;">
-  Sou estudante de ADS, com foco em desenvolvimento backend. Estou em busca de uma oportunidade de estágio ou vaga júnior que me permita aplicar meus conhecimentos, aprender com profissionais experientes e crescer pessoal e profissionalmente na área de tecnologia.
- Tenho interesse especial em estruturas de dados, APIs, Java, python e banco de dados, sempre buscando aprimorar minhas habilidades com estudos constantes e projetos práticos. Estou comprometido com minha carreira e motivado a contribuir com soluções eficientes.
+        Sou estudante de ADS, com foco em desenvolvimento backend. Estou em busca de uma oportunidade de <strong>estÃ¡gio</strong> ou vaga <strong>jÃºnior</strong> que me permita aplicar meus conhecimentos, aprender com profissionais experientes e crescer pessoal e profissionalmente na <strong>Ã¡rea</strong> de tecnologia. Tenho interesse especial em estruturas de dados, APIs, Java, Python e banco de dados, sempre buscando aprimorar minhas habilidades com estudos constantes e projetos <strong>prÃ¡ticos</strong>. Estou comprometido com minha carreira e motivado a contribuir com <strong>soluÃ§Ãµes</strong> eficientes.
       </p>
     </div>
   </section>
@@ -186,19 +182,19 @@
       <div class="card" data-aos="flip-left">
         <i data-lucide="globe" style="color: var(--primary); margin-bottom: 15px;"></i>
         <h3>E-commerce Next.js</h3>
-        <p>Plataforma escalável com integração de pagamentos e painel administrativo.</p>
+        <p>Plataforma escalÃ¡vel com integraÃ§Ã£o de pagamentos e painel administrativo.</p>
         <a href="#" class="btn">Ver Projeto</a>
       </div>
       <div class="card" data-aos="flip-left" data-aos-delay="200">
         <i data-lucide="smartphone" style="color: var(--primary); margin-bottom: 15px;"></i>
-        <h3>App de Finanças</h3>
-        <p>Interface intuitiva para controle de gastos com gráficos em tempo real.</p>
+        <h3>App de FinanÃ§as</h3>
+        <p>Interface intuitiva para controle de gastos com grÃ¡ficos em tempo real.</p>
         <a href="#" class="btn">Ver Projeto</a>
       </div>
       <div class="card" data-aos="flip-left" data-aos-delay="400">
         <i data-lucide="database" style="color: var(--primary); margin-bottom: 15px;"></i>
-        <h3>API de Logística</h3>
-        <p>Backend robusto processando milhares de requisições diárias.</p>
+        <h3>API de LogÃ­stica</h3>
+        <p>Backend robusto processando milhares de requisiÃ§Ãµes diÃ¡rias.</p>
         <a href="#" class="btn">Ver Projeto</a>
       </div>
     </div>
@@ -207,7 +203,7 @@
   <section id="contato" data-aos="fade-up">
     <h2><i data-lucide="mail"></i> Contato</h2>
     <div class="card" style="text-align: center;">
-      <p>Vamos construir algo incrível juntos?</p>
+      <p>Vamos construir algo incrÃ­vel juntos?</p>
       <h3 style="margin: 20px 0; font-size: 1.5rem; color: var(--primary);">jamissoncastor153@gmail.com</h3>
       <div style="display: flex; justify-content: center; gap: 20px;">
         <i data-lucide="github" style="cursor: pointer;"></i>
@@ -218,22 +214,19 @@
   </section>
 
   <footer>
-    <p>© 2026 Desenvolvido por Jamisson</p>
+    <p>Â© 2026 Desenvolvido por Jamisson</p>
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    // Inicializar Ícones
     lucide.createIcons();
 
-    // Inicializar Animações de Scroll
     AOS.init({
       duration: 1000,
       once: false,
       mirror: true
     });
 
-    // Efeito de Partículas Interativas no Background
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -271,6 +264,7 @@
     }
 
     function initParticles() {
+      particles = [];
       for (let i = 0; i < 80; i++) {
         particles.push(new Particle());
       }
@@ -288,11 +282,13 @@
     initParticles();
     animate();
 
-    // Efeito de parallax suave no mouse
     document.addEventListener('mousemove', (e) => {
-      const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-      const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-      document.querySelector('.infinity-container').style.transform = `translate(${moveX}px, ${moveY}px)`;
+      const container = document.querySelector('.infinity-container');
+      if(container) {
+          const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+          const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+          container.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      }
     });
   </script>
 </body>
