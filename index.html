@@ -1,321 +1,275 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jamisson Silva | Portfolio</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamisson Silva | Dev Backend</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <style>
-    :root {
-      --primary: #38bdf8;
-      --secondary: #818cf8;
-      --bg-dark: #020617;
-      --card-bg: rgba(15, 23, 42, 0.6);
-    }
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --secondary: #818cf8;
+            --accent: #f0abfc;
+            --bg-dark: #020617;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --border: rgba(255, 255, 255, 0.08);
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none; /* Cursor personalizado */
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
-      color: #f1f5f9;
-      overflow-x: hidden;
-      width: 100%;
-    }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    /* Fundo de Partículas */
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
+        /* Cursor Personalizado */
+        #cursor {
+            width: 20px; height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
 
-    header {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-      position: relative;
-    }
+        /* Background Dinâmico */
+        .blob {
+            position: fixed;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+        }
 
-    .infinity-container {
-      position: absolute;
-      z-index: -1;
-      filter: blur(80px);
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      opacity: 0.3;
-      animation: pulse 8s infinite alternate;
-    }
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
 
-    @keyframes pulse {
-      from { transform: scale(1) translate(-10%, -10%); }
-      to { transform: scale(1.5) translate(10%, 10%); }
-    }
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 800;
+            line-height: 0.9;
+            text-align: center;
+            background: linear-gradient(135deg, #fff 30%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
 
-    header h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 800;
-      background: linear-gradient(to right, #fff, var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-    }
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
 
-    header p {
-      font-size: 1.2rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
+        .bento-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: border-color 0.3s ease;
+        }
 
-    section {
-      max-width: 1100px;
-      margin: 80px auto;
-      padding: 0 20px;
-    }
+        .bento-item:hover {
+            border-color: var(--primary);
+        }
 
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 40px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+        /* Spotlight Effect */
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: var(--y); left: var(--x);
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1), transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
 
-    h2::after {
-      content: "";
-      height: 2px;
-      flex-grow: 1;
-      background: linear-gradient(to right, var(--primary), transparent);
-    }
+        /* Variações de tamanho da Grid */
+        .large { grid-column: span 2; grid-row: span 2; }
+        .wide { grid-column: span 2; }
+        .tall { grid-row: span 2; }
 
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 30px;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .large, .wide, .tall { grid-column: span 1; grid-row: span 1; }
+            * { cursor: auto; }
+            #cursor { display: none; }
+        }
 
-    .card:hover {
-      transform: translateY(-10px);
-      border-color: var(--primary);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
+        h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
 
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
+        .btn-modern {
+            padding: 12px 24px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
 
-    .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: var(--primary);
-      color: #000;
-      font-weight: 600;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
+        .btn-modern:hover { transform: scale(1.05); }
 
-    .btn:hover {
-      filter: brightness(1.2);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
-    }
-
-    /* Rodapé Responsivo */
-    footer {
-      padding: 40px 20px;
-      text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    footer p {
-      font-size: 0.9rem;
-      opacity: 0.6;
-      line-height: 1.5;
-      word-wrap: break-word;
-    }
-
-    @media (max-width: 480px) {
-      footer p {
-        font-size: 0.8rem;
-      }
-      header p {
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-      }
-    }
-
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-dark); }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-  </style>
+    </style>
 </head>
 <body>
 
-  <canvas id="bg-canvas"></canvas>
+    <div id="cursor"></div>
+    <div class="blob" id="blob"></div>
 
-  <header>
-    <div class="infinity-container"></div>
-    <h1 data-aos="zoom-out">Jamisson Silva</h1>
-    <p data-aos="fade-up" data-aos-delay="300">Dev Backend em aprendizado</p>
-    <div style="margin-top: 40px;" data-aos="fade-up" data-aos-delay="600">
-        <i data-lucide="mouse-pointer-2" style="animation: bounce 2s infinite"></i>
+    <header>
+        <h1 class="hero-title">Jamisson<br>Silva</h1>
+        <p style="letter-spacing: 5px; text-transform: uppercase; opacity: 0.6;">Backend Developer</p>
+    </header>
+
+    <div class="bento-grid">
+        <div class="bento-item large" data-aos-gsap="reveal">
+            <span class="tag">Sobre Mim</span>
+            <h3>Estudante de ADS</h3>
+            <p>Focado em criar sistemas robustos. Especializando em Java e Python para soluções escaláveis.</p>
+            <div style="margin-top: 40px; display: flex; gap: 15px;">
+                <i data-lucide="database"></i>
+                <i data-lucide="server"></i>
+                <i data-lucide="code-2"></i>
+            </div>
+        </div>
+
+        <div class="bento-item wide">
+            <span class="tag">Projeto</span>
+            <h3>E-commerce API</h3>
+            <p>Backend de alta performance com Node.js e PostgreSQL.</p>
+            <a href="#" class="btn-modern">GitHub</a>
+        </div>
+
+        <div class="bento-item tall">
+            <span class="tag">Stack</span>
+            <ul style="list-style: none; margin-top: 20px;">
+                <li style="margin-bottom: 15px;">🚀 Spring Boot</li>
+                <li style="margin-bottom: 15px;">🐍 Django</li>
+                <li style="margin-bottom: 15px;">🐳 Docker</li>
+                <li>📊 PostgreSQL</li>
+            </ul>
+        </div>
+
+        <div class="bento-item">
+            <span class="tag">Contato</span>
+            <h3>Vamos conversar?</h3>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <i data-lucide="linkedin"></i>
+                <i data-lucide="github"></i>
+            </div>
+        </div>
+
+        <div class="bento-item wide">
+            <span class="tag">Projeto</span>
+            <h3>Fintech App</h3>
+            <p>Processamento de pagamentos em tempo real.</p>
+        </div>
     </div>
-  </header>
 
-  <section id="sobre" data-aos="fade-right">
-    <h2><i data-lucide="user"></i> Sobre Mim</h2>
-    <div class="card">
-      <p style="line-height: 1.8; font-size: 1.1rem;">
-        Sou estudante de ADS, com foco em desenvolvimento backend. Estou em busca de uma oportunidade de <strong>estágio</strong> ou vaga <strong>júnior</strong> que me permita aplicar meus conhecimentos, aprender com profissionais experientes e crescer pessoal e profissionalmente na <strong>área</strong> de tecnologia. Tenho interesse especial em estruturas de dados, APIs, Java, Python e banco de dados, sempre buscando aprimorar minhas habilidades com estudos constantes e projetos <strong>práticos</strong>. Estou comprometido com minha carreira e motivado a contribuir com <strong>soluções</strong> eficientes.
-      </p>
-    </div>
-  </section>
+    <footer style="text-align: center; padding: 100px 20px; opacity: 0.4;">
+        <p>© 2026 Jamisson Silva • Crafted with Code</p>
+    </footer>
 
-  <section id="portfolio">
-    <h2 data-aos="fade-right"><i data-lucide="layout"></i> Projetos</h2>
-    <div class="portfolio-grid">
-      <div class="card" data-aos="flip-left">
-        <i data-lucide="globe" style="color: var(--primary); margin-bottom: 15px;"></i>
-        <h3>E-commerce Next.js</h3>
-        <p>Plataforma escalável com integração de pagamentos e painel administrativo.</p>
-        <a href="#" class="btn">Ver Projeto</a>
-      </div>
-      <div class="card" data-aos="flip-left" data-aos-delay="200">
-        <i data-lucide="smartphone" style="color: var(--primary); margin-bottom: 15px;"></i>
-        <h3>App de Finanças</h3>
-        <p>Interface intuitiva para controle de gastos com gráficos em tempo real.</p>
-        <a href="#" class="btn">Ver Projeto</a>
-      </div>
-      <div class="card" data-aos="flip-left" data-aos-delay="400">
-        <i data-lucide="database" style="color: var(--primary); margin-bottom: 15px;"></i>
-        <h3>API de Logística</h3>
-        <p>Backend robusto processando milhares de requisições diárias.</p>
-        <a href="#" class="btn">Ver Projeto</a>
-      </div>
-    </div>
-  </section>
+    <script>
+        // Inicializar Lucide
+        lucide.createIcons();
 
-  <section id="contato" data-aos="fade-up">
-    <h2><i data-lucide="mail"></i> Contato</h2>
-    <div class="card" style="text-align: center;">
-      <p>Vamos construir algo incrível juntos?</p>
-      <h3 style="margin: 20px 0; font-size: 1.3rem; color: var(--primary); word-break: break-all;">jamissoncastor153@gmail.com</h3>
-      <div style="display: flex; justify-content: center; gap: 20px;">
-        <i data-lucide="github" style="cursor: pointer;"></i>
-        <i data-lucide="linkedin" style="cursor: pointer;"></i>
-        <i data-lucide="instagram" style="cursor: pointer;"></i>
-      </div>
-    </div>
-  </section>
+        // 1. Cursor Personalizado
+        const cursor = document.getElementById('cursor');
+        const blob = document.getElementById('blob');
 
-  <footer>
-    <p>© 2026 Desenvolvido por Jamisson</p>
-  </footer>
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            gsap.to(blob, { x: e.clientX - 250, y: e.clientY - 250, duration: 1.5 });
+        });
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    // Inicializar Ícones
-    lucide.createIcons();
+        // 2. Spotlight Effect nos Cards
+        document.querySelectorAll('.bento-item').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
 
-    // Inicializar Animações
-    AOS.init({
-      duration: 1000,
-      once: false,
-      mirror: true
-    });
+        // 3. Animações GSAP
+        gsap.registerPlugin(ScrollTrigger);
 
-    // Efeito de Partículas
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
+        // Animação de entrada do título
+        gsap.from(".hero-title", {
+            y: 100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power4.out"
+        });
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+        // Animação dos itens da Grid ao scroll
+        gsap.utils.toArray('.bento-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 90%",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
 
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
-      }
-      draw() {
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.3)';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 60; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animate);
-    }
-
-    initParticles();
-    animate();
-
-    // Parallax suave
-    document.addEventListener('mousemove', (e) => {
-      const container = document.querySelector('.infinity-container');
-      if (container) {
-        const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-        const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
-        container.style.transform = `translate(${moveX}px, ${moveY}px)`;
-      }
-    });
-  </script>
+        // Efeito de hover "Magnético" nos ícones
+        document.querySelectorAll('i').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                gsap.to(cursor, { scale: 3, background: 'white' });
+            });
+            icon.addEventListener('mouseleave', () => {
+                gsap.to(cursor, { scale: 1, background: '#38bdf8' });
+            });
+        });
+    </script>
 </body>
 </html>
