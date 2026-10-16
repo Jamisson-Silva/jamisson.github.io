@@ -1,275 +1,1164 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jamisson Silva | Dev Backend</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <meta name="theme-color" content="#05070b">
+    <meta name="description" content="Portfólio de Jamisson Castor da Silva, estudante de ADS com foco em desenvolvimento backend.">
+
+    <title>Jamisson Silva | Desenvolvimento Backend</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
-            --primary: #38bdf8;
-            --secondary: #818cf8;
-            --accent: #f0abfc;
-            --bg-dark: #020617;
-            --card-bg: rgba(15, 23, 42, 0.7);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #05070b;
+            --panel: #10151f;
+            --line: #26303e;
+            --text: #f4f7fb;
+            --muted: #a1adbd;
+            --accent: #76d4f8;
         }
 
         * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            cursor: none; /* Cursor personalizado */
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-dark);
-            color: #f1f5f9;
-            overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        /* Cursor Personalizado */
-        #cursor {
-            width: 20px; height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        /* Background Dinâmico */
-        .blob {
-            position: fixed;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(60px);
+        a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 5px;
         }
 
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
+        img {
+            display: block;
+            max-width: 100%;
         }
 
-        .hero-title {
-            font-size: clamp(3rem, 10vw, 7rem);
-            font-weight: 800;
-            line-height: 0.9;
-            text-align: center;
-            background: linear-gradient(135deg, #fff 30%, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        /* Bento Grid Layout */
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: minmax(180px, auto);
-            gap: 20px;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-
-        .bento-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            transition: border-color 0.3s ease;
-        }
-
-        .bento-item:hover {
-            border-color: var(--primary);
-        }
-
-        /* Spotlight Effect */
-        .bento-item::before {
+        body::before {
             content: '';
             position: absolute;
-            top: var(--y); left: var(--x);
-            width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.1), transparent 70%);
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 900px;
+            z-index: -1;
             pointer-events: none;
+            background: radial-gradient(
+                ellipse at 50% 18%,
+                #16344a 0%,
+                transparent 65%
+            );
         }
 
-        /* Variações de tamanho da Grid */
-        .large { grid-column: span 2; grid-row: span 2; }
-        .wide { grid-column: span 2; }
-        .tall { grid-row: span 2; }
+        /* NAVEGAÇÃO */
 
-        @media (max-width: 900px) {
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .bento-grid { grid-template-columns: 1fr; }
-            .large, .wide, .tall { grid-column: span 1; grid-row: span 1; }
-            * { cursor: auto; }
-            #cursor { display: none; }
+        nav {
+            max-width: 1220px;
+            margin: auto;
+            padding: 27px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
         }
 
-        h3 { font-size: 1.5rem; margin-bottom: 10px; color: #fff; }
-        .tag {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
+        .monogram {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
         }
 
-        .btn-modern {
-            padding: 12px 24px;
-            background: #fff;
-            color: #000;
-            text-decoration: none;
-            border-radius: 12px;
+        .monogram b {
+            color: var(--accent);
+        }
+
+        .navlinks {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .navlinks a {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .navlinks a:hover {
+            color: white;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 82svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 70px 22px 95px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
             font-weight: 700;
-            display: inline-block;
-            margin-top: 20px;
-            transition: transform 0.2s;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent);
         }
 
-        .btn-modern:hover { transform: scale(1.05); }
+        .hero h1 {
+            font-size: clamp(58px, 10vw, 124px);
+            letter-spacing: -0.085em;
+            line-height: 0.94;
+            margin: 28px 0;
+            background: linear-gradient(
+                120deg,
+                #fff 38%,
+                #77c9ec
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
+        .hero .role {
+            letter-spacing: 4px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #c4d0de;
+        }
+
+        .hero p {
+            max-width: 610px;
+            color: var(--muted);
+            margin: 22px auto 0;
+            font-size: 15px;
+        }
+
+        /* BOTÕES */
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 22px;
+            border-radius: 11px;
+            font-weight: 700;
+            font-size: 13px;
+            background: #f7fafc;
+            color: #07101a;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #a9e6ff;
+        }
+
+        .btn.secondary {
+            color: #f4f7fb;
+            background: transparent;
+            border: 1px solid #354153;
+        }
+
+        .btn.secondary:hover {
+            background: #1a2532;
+        }
+
+        /* CONTEÚDO */
+
+        main {
+            max-width: 1220px;
+            padding: 0 24px;
+            margin: auto;
+        }
+
+        section {
+            scroll-margin-top: 35px;
+        }
+
+        .sectionhead {
+            margin: 78px 0 26px;
+        }
+
+        .sectionhead h2 {
+            font-size: clamp(30px, 5vw, 46px);
+            letter-spacing: -0.055em;
+            line-height: 1.1;
+            margin: 12px 0;
+        }
+
+        .sectionhead p {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 680px;
+        }
+
+        /* BENTO GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: linear-gradient(
+                145deg,
+                #131a26,
+                #0b1019
+            );
+            padding: 29px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .card:hover {
+            border-color: #47728d;
+            transform: translateY(-3px);
+        }
+
+        .card.wide {
+            grid-column: span 2;
+        }
+
+        .card.big {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            letter-spacing: -0.04em;
+            line-height: 1.25;
+            margin: 13px 0;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--muted);
+            margin: 0 0 15px;
+        }
+
+        .label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .chips span {
+            font-size: 12px;
+            padding: 7px 11px;
+            border: 1px solid #314050;
+            border-radius: 999px;
+            color: #d4e2ee;
+        }
+
+        .smalllink {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* FRAME TECH */
+
+        .frame-section {
+            margin-top: 105px;
+            padding: 30px 0 0;
+        }
+
+        .frame-shell {
+            border: 1px solid #292929;
+            border-radius: 28px;
+            overflow: hidden;
+            background: #050505;
+        }
+
+        .frame-hero {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            align-items: center;
+            gap: 40px;
+            padding: 55px 50px;
+            background: #000;
+        }
+
+        .frame-hero .frame-art {
+            width: 100%;
+            aspect-ratio: 1.4;
+            object-fit: contain;
+        }
+
+        .frame-copy .eyebrow {
+            color: #d4d4d4;
+        }
+
+        .frame-copy h2 {
+            font-size: clamp(34px, 4.5vw, 58px);
+            letter-spacing: -0.065em;
+            line-height: 1.08;
+            margin: 20px 0;
+        }
+
+        .frame-copy p {
+            color: #b3b3b3;
+            font-size: 14px;
+            max-width: 440px;
+        }
+
+        /* STATUS DO PROJETO */
+
+        .status {
+            display: inline-flex;
+            gap: 9px;
+            align-items: center;
+            border: 1px solid #444;
+            border-radius: 999px;
+            color: #dedede;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 8px 12px;
+            margin-top: 14px;
+        }
+
+        .status::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #d3d3d3;
+        }
+
+        /* HISTÓRIA DA FRAME */
+
+        .frame-story {
+            padding: 38px 50px;
+            border-top: 1px solid #262626;
+        }
+
+        .frame-story h3 {
+            font-size: 25px;
+            letter-spacing: -0.04em;
+            margin: 0 0 14px;
+        }
+
+        .frame-story p {
+            color: #aaa;
+            max-width: 900px;
+            font-size: 14px;
+            margin: 0 0 14px;
+        }
+
+        .frame-note {
+            font-size: 12px !important;
+            color: #dedede !important;
+            font-weight: 700;
+        }
+
+        /* GALERIA DAS LOGOS */
+
+        .frame-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            padding: 0 50px 45px;
+        }
+
+        .frame-tile {
+            margin: 0;
+            background: #080808;
+            border: 1px solid #262626;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .frame-tile img {
+            width: 100%;
+            aspect-ratio: 1.45;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .frame-tile:hover img {
+            transform: scale(1.035);
+        }
+
+        .frame-tile figcaption {
+            padding: 0 16px 15px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        /* CONTATO */
+
+        .contact {
+            margin: 90px 0 30px;
+            text-align: center;
+            border: 1px solid var(--line);
+            background: #0f1520;
+            padding: 60px 24px;
+            border-radius: 25px;
+        }
+
+        .contact h2 {
+            font-size: clamp(30px, 5vw, 48px);
+            letter-spacing: -0.06em;
+            margin: 12px 0;
+        }
+
+        .contact p {
+            max-width: 530px;
+            color: var(--muted);
+            margin: 0 auto;
+            font-size: 14px;
+        }
+
+        .contact .actions {
+            margin-top: 28px;
+        }
+
+        footer {
+            padding: 50px 20px;
+            color: #8290a0;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* TABLETS */
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .card.big {
+                grid-row: span 1;
+            }
+
+            .frame-hero {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .frame-hero .frame-art {
+                max-height: 320px;
+            }
+
+            .frame-copy {
+                text-align: center;
+            }
+
+            .frame-copy p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* CELULARES */
+
+        @media (max-width: 580px) {
+            nav {
+                align-items: flex-start;
+            }
+
+            .navlinks {
+                justify-content: flex-end;
+                gap: 10px 14px;
+            }
+
+            .navlinks a {
+                font-size: 11px;
+            }
+
+            .hero {
+                min-height: 570px;
+            }
+
+            .hero h1 {
+                letter-spacing: -0.07em;
+            }
+
+            .hero .role {
+                letter-spacing: 2px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card.wide,
+            .card.big {
+                grid-column: span 1;
+            }
+
+            .card {
+                padding: 23px;
+            }
+
+            .frame-hero {
+                padding: 26px 22px 35px;
+            }
+
+            .frame-story {
+                padding: 28px 22px;
+            }
+
+            .frame-gallery {
+                padding: 0 22px 30px;
+                grid-template-columns: 1fr;
+            }
+
+            .frame-tile img {
+                aspect-ratio: 1.6;
+            }
+
+            .frame-section {
+                margin-top: 65px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-    <div id="cursor"></div>
-    <div class="blob" id="blob"></div>
+    <!-- NAVEGAÇÃO -->
 
-    <header>
-        <h1 class="hero-title">Jamisson<br>Silva</h1>
-        <p style="letter-spacing: 5px; text-transform: uppercase; opacity: 0.6;">Backend Developer</p>
+    <nav>
+        <a href="#inicio" class="monogram" aria-label="Início">
+            JS<b>.</b>
+        </a>
+
+        <div class="navlinks">
+            <a href="#sobre">Sobre</a>
+            <a href="#trajetoria">Trajetória</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#frame">Frame Tech</a>
+            <a href="#contato">Contato</a>
+        </div>
+    </nav>
+
+    <!-- APRESENTAÇÃO -->
+
+    <header class="hero" id="inicio">
+
+        <span class="eyebrow">
+            Estudante de tecnologia
+        </span>
+
+        <h1>
+            Jamisson<br>Silva
+        </h1>
+
+        <div class="role">
+            Future Software Engineer
+        </div>
+
+        <p>
+            Estudante de Análise e Desenvolvimento de Sistemas,
+            com foco em desenvolvimento backend e interesse
+            em construir soluções eficientes, seguras e escaláveis.
+        </p>
+
+        <div class="actions">
+
+            <a href="#sobre" class="btn">
+                Conheça meu perfil ↗
+            </a>
+
+            <a href="#contato" class="btn secondary">
+                Entre em contato
+            </a>
+
+        </div>
+
     </header>
 
-    <div class="bento-grid">
-        <div class="bento-item large" data-aos-gsap="reveal">
-            <span class="tag">Sobre Mim</span>
-            <h3>Estudante de ADS</h3>
-            <p>Focado em criar sistemas robustos. Especializando em Java e Python para soluções escaláveis.</p>
-            <div style="margin-top: 40px; display: flex; gap: 15px;">
-                <i data-lucide="database"></i>
-                <i data-lucide="server"></i>
-                <i data-lucide="code-2"></i>
+    <main>
+
+        <!-- SOBRE MIM -->
+
+        <section id="sobre">
+
+            <div class="sectionhead">
+                <span class="eyebrow">01 / Perfil</span>
+                <h2>Sobre mim.</h2>
             </div>
-        </div>
 
-        <div class="bento-item wide">
-            <span class="tag">Projeto</span>
-            <h3>E-commerce API</h3>
-            <p>Backend de alta performance com Node.js e PostgreSQL.</p>
-            <a href="#" class="btn-modern">GitHub</a>
-        </div>
+            <div class="grid">
 
-        <div class="bento-item tall">
-            <span class="tag">Stack</span>
-            <ul style="list-style: none; margin-top: 20px;">
-                <li style="margin-bottom: 15px;">🚀 Spring Boot</li>
-                <li style="margin-bottom: 15px;">🐍 Django</li>
-                <li style="margin-bottom: 15px;">🐳 Docker</li>
-                <li>📊 PostgreSQL</li>
-            </ul>
-        </div>
+                <article class="card big">
 
-        <div class="bento-item">
-            <span class="tag">Contato</span>
-            <h3>Vamos conversar?</h3>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <i data-lucide="linkedin"></i>
-                <i data-lucide="github"></i>
+                    <span class="label">Quem sou eu</span>
+
+                    <h3>
+                        Olá, sou Jamisson Castor da Silva.
+                    </h3>
+
+                    <p>
+                        Sou estudante de Análise e Desenvolvimento
+                        de Sistemas na Universidade Cruzeiro do Sul
+                        (UNICSUL).
+                    </p>
+
+                    <p>
+                        Quero construir uma carreira em
+                        desenvolvimento de software, com foco
+                        em backend, utilizando Java, Python
+                        e JavaScript.
+                    </p>
+
+                    <p>
+                        Sou proativo, comunicativo e organizado,
+                        com facilidade para trabalhar em equipe
+                        e disposição para aprender continuamente.
+                    </p>
+
+                </article>
+
+                <!-- FORMAÇÃO -->
+
+                <article class="card wide">
+
+                    <span class="label">
+                        Formação acadêmica
+                    </span>
+
+                    <h3>
+                        Análise e Desenvolvimento de Sistemas
+                    </h3>
+
+                    <p>
+                        Universidade Cruzeiro do Sul — UNICSUL
+                    </p>
+
+                    <div class="chips">
+                        <span>2025 — Atual</span>
+                    </div>
+
+                </article>
+
+                <!-- TECNOLOGIAS -->
+
+                <article class="card">
+
+                    <span class="label">
+                        Tecnologias de interesse
+                    </span>
+
+                    <h3>Minha stack.</h3>
+
+                    <p>
+                        Linguagens que fazem parte do meu
+                        direcionamento profissional.
+                    </p>
+
+                    <div class="chips">
+                        <span>Java</span>
+                        <span>Python</span>
+                        <span>JavaScript</span>
+                    </div>
+
+                </article>
+
+                <!-- OBJETIVO -->
+
+                <article class="card">
+
+                    <span class="label">Objetivo</span>
+
+                    <h3>Software Engineer.</h3>
+
+                    <p>
+                        Evoluir até me tornar Engenheiro
+                        de Software, com especialização
+                        em backend.
+                    </p>
+
+                </article>
+
+                <!-- INTERESSES -->
+
+                <article class="card wide">
+
+                    <span class="label">
+                        Áreas de interesse
+                    </span>
+
+                    <h3>Backend & Arquitetura.</h3>
+
+                    <p>
+                        Tenho interesse em APIs, arquitetura
+                        de sistemas e aplicações eficientes,
+                        seguras e escaláveis.
+                    </p>
+
+                </article>
+
             </div>
-        </div>
 
-        <div class="bento-item wide">
-            <span class="tag">Projeto</span>
-            <h3>Fintech App</h3>
-            <p>Processamento de pagamentos em tempo real.</p>
-        </div>
-    </div>
+        </section>
 
-    <footer style="text-align: center; padding: 100px 20px; opacity: 0.4;">
-        <p>© 2026 Jamisson Silva • Crafted with Code</p>
+        <!-- TRAJETÓRIA -->
+
+        <section id="trajetoria">
+
+            <div class="sectionhead">
+                <span class="eyebrow">
+                    02 / Experiência
+                </span>
+
+                <h2>Minha trajetória.</h2>
+            </div>
+
+            <div class="grid">
+
+                <article class="card wide">
+
+                    <span class="label">
+                        Experiência profissional · 2025 — Atual
+                    </span>
+
+                    <h3>Auxiliar de Estoque</h3>
+
+                    <p>
+                        Euro Import Comércio e Serviços Ltda.
+                    </p>
+
+                    <p>
+                        Recebimento e conferência de peças
+                        automotivas para ordens de serviço,
+                        organização de materiais, colaboração
+                        com a equipe e lançamento e controle
+                        de notas fiscais no sistema.
+                    </p>
+
+                </article>
+
+                <article class="card wide">
+
+                    <span class="label">
+                        Desenvolvimento contínuo
+                    </span>
+
+                    <h3>Além do código.</h3>
+
+                    <p>
+                        Valorizo a comunicação, a organização,
+                        a responsabilidade e o trabalho
+                        em equipe.
+                    </p>
+
+                    <p>
+                        Busco aprender continuamente e aplicar
+                        esses conhecimentos na área de tecnologia.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- PROJETOS -->
+
+        <section id="projetos">
+
+            <div class="sectionhead">
+                <span class="eyebrow">
+                    03 / Desenvolvimento
+                </span>
+
+                <h2>Projetos.</h2>
+            </div>
+
+            <div class="grid">
+
+                <article class="card wide">
+
+                    <span class="label">Em construção</span>
+
+                    <h3>Projetos de software.</h3>
+
+                    <p>
+                        Espaço reservado para apresentar
+                        meus trabalhos, estudos e aplicações
+                        práticas conforme meu desenvolvimento
+                        acadêmico e profissional.
+                    </p>
+
+                </article>
+
+                <article class="card wide">
+
+                    <span class="label">
+                        Código & Aprendizado
+                    </span>
+
+                    <h3>
+                        Transformando conhecimento em prática.
+                    </h3>
+
+                    <p>
+                        Quero explorar desenvolvimento backend,
+                        APIs e sistemas reais ao longo
+                        da minha formação.
+                    </p>
+
+                    <a
+                        href="https://github.com/Jamisson-Silva"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="smalllink"
+                    >
+                        Acompanhar meu GitHub ↗
+                    </a>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- FRAME TECH -->
+
+        <section
+            id="frame"
+            class="frame-section"
+            aria-labelledby="frame-heading"
+        >
+
+            <div class="sectionhead">
+
+                <span class="eyebrow">
+                    04 / Visão de futuro
+                </span>
+
+                <h2 id="frame-heading">
+                    Uma ideia no papel.
+                </h2>
+
+                <p>
+                    Uma ambição pessoal de longo prazo,
+                    ainda em sua fase mais inicial.
+                </p>
+
+            </div>
+
+            <div class="frame-shell">
+
+                <!-- IDENTIDADE PRINCIPAL -->
+
+                <div class="frame-hero">
+
+                    <img
+                        src="frame-logo.png"
+                        alt="Identidade visual original da Frame, com nome e símbolo"
+                        class="frame-art"
+                        loading="lazy"
+                    >
+
+                    <div class="frame-copy">
+
+                        <span class="eyebrow">
+                            Frame Tech / Projeto conceitual
+                        </span>
+
+                        <h2>
+                            Grandes projetos começam
+                            com uma ideia.
+                        </h2>
+
+                        <p>
+                            A Frame Tech representa meu sonho
+                            de, um dia, criar uma empresa
+                            de desenvolvimento de software.
+                        </p>
+
+                        <span class="status">
+                            Rascunho inicial · Não é uma empresa em atividade
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- HISTÓRIA DO PROJETO -->
+
+                <div class="frame-story">
+
+                    <h3>O começo de uma visão.</h3>
+
+                    <p>
+                        A Frame Tech é a idealização de um
+                        sonho pessoal: construir, no futuro,
+                        minha própria empresa de desenvolvimento
+                        de software.
+                    </p>
+
+                    <p>
+                        A ideia nasceu da vontade de unir
+                        tecnologia, criatividade, simplicidade
+                        e qualidade na criação de soluções digitais.
+                    </p>
+
+                    <p>
+                        <strong style="color: #fff;">
+                            Atualmente, a Frame Tech ainda
+                            não existe como empresa.
+                        </strong>
+
+                        É apenas um rascunho inicial,
+                        sem operações, produtos, clientes
+                        ou serviços disponíveis.
+                    </p>
+
+                    <p>
+                        Por enquanto, o projeto reúne uma
+                        identidade visual, algumas ideias
+                        e uma direção que desejo amadurecer.
+                    </p>
+
+                    <p>
+                        Meu objetivo é adquirir experiência,
+                        aprofundar meus conhecimentos em
+                        engenharia de software e, quem sabe,
+                        transformar esse sonho em realidade.
+                    </p>
+
+                    <p>
+                        Não existe uma data definida
+                        para sua concretização.
+                    </p>
+
+                    <p class="frame-note">
+                        Este espaço apresenta uma ideia pessoal
+                        de futuro, não um negócio em funcionamento.
+                    </p>
+
+                </div>
+
+                <!-- GALERIA DE IDENTIDADE VISUAL -->
+
+                <div class="frame-gallery">
+
+                    <figure class="frame-tile">
+
+                        <img
+                            src="frame-simbolo.png"
+                            alt="Símbolo original em preto e branco da Frame Tech"
+                            loading="lazy"
+                        >
+
+                        <figcaption>
+                            01 / Símbolo original
+                        </figcaption>
+
+                    </figure>
+
+                    <figure class="frame-tile">
+
+                        <img
+                            src="frame-conceito.png"
+                            alt="Estudo visual com acabamento iridescente da identidade Frame Tech"
+                            loading="lazy"
+                        >
+
+                        <figcaption>
+                            02 / Estudo visual da identidade
+                        </figcaption>
+
+                    </figure>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CONTATO -->
+
+        <section class="contact" id="contato">
+
+            <span class="eyebrow">
+                05 / Contato
+            </span>
+
+            <h2>Vamos conversar?</h2>
+
+            <p>
+                Estou em busca de oportunidades na área
+                de Tecnologia da Informação, especialmente
+                em desenvolvimento de software.
+            </p>
+
+            <div class="actions">
+
+                <!-- E-MAIL -->
+
+                <a
+                    href="mailto:jamissoncastor153@gmail.com"
+                    class="btn"
+                >
+                    E-mail ↗
+                </a>
+
+                <!-- LINKEDIN -->
+
+                <a
+                    href="https://www.linkedin.com/in/jamisson-c-da-silva-623bb2383"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn secondary"
+                >
+                    LinkedIn ↗
+                </a>
+
+                <!-- GITHUB -->
+
+                <a
+                    href="https://github.com/Jamisson-Silva"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn secondary"
+                >
+                    GitHub ↗
+                </a>
+
+                <!-- CURRÍCULO -->
+
+                <a
+                    href="curriculo.pdf"
+                    download
+                    class="btn secondary"
+                >
+                    Currículo ↓
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+
+    <footer>
+        © 2026 Jamisson Castor da Silva ·
+        Desenvolvido com código.
     </footer>
 
+    <!-- ANIMAÇÕES -->
+
     <script>
-        // Inicializar Lucide
-        lucide.createIcons();
 
-        // 1. Cursor Personalizado
-        const cursor = document.getElementById('cursor');
-        const blob = document.getElementById('blob');
+        window.addEventListener('load', () => {
 
-        document.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(blob, { x: e.clientX - 250, y: e.clientY - 250, duration: 1.5 });
-        });
+            if (!window.gsap) return;
 
-        // 2. Spotlight Effect nos Cards
-        document.querySelectorAll('.bento-item').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--y', `${e.clientY - rect.top}px`);
-            });
-        });
+            const reducedMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)'
+            ).matches;
 
-        // 3. Animações GSAP
-        gsap.registerPlugin(ScrollTrigger);
+            if (reducedMotion) return;
 
-        // Animação de entrada do título
-        gsap.from(".hero-title", {
-            y: 100,
-            opacity: 0,
-            duration: 1.5,
-            ease: "power4.out"
-        });
+            // ANIMAÇÃO INICIAL
 
-        // Animação dos itens da Grid ao scroll
-        gsap.utils.toArray('.bento-item').forEach((item, i) => {
-            gsap.from(item, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 90%",
-                },
-                y: 50,
+            gsap.from('.hero > *', {
                 opacity: 0,
+                y: 30,
+                stagger: 0.13,
                 duration: 0.8,
-                delay: i * 0.1,
-                ease: "power2.out"
+                ease: 'power2.out'
             });
+
+            // ANIMAÇÕES AO ROLAR A PÁGINA
+
+            if (window.ScrollTrigger) {
+
+                gsap.registerPlugin(ScrollTrigger);
+
+                document.querySelectorAll(
+                    '.card, .frame-shell'
+                ).forEach(el => {
+
+                    gsap.from(el, {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 92%',
+                            once: true
+                        },
+                        opacity: 0,
+                        y: 32,
+                        duration: 0.7,
+                        ease: 'power2.out'
+                    });
+
+                });
+
+            }
+
         });
 
-        // Efeito de hover "Magnético" nos ícones
-        document.querySelectorAll('i').forEach(icon => {
-            icon.addEventListener('mouseenter', () => {
-                gsap.to(cursor, { scale: 3, background: 'white' });
-            });
-            icon.addEventListener('mouseleave', () => {
-                gsap.to(cursor, { scale: 1, background: '#38bdf8' });
-            });
-        });
     </script>
+
 </body>
 </html>
